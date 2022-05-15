@@ -1,0 +1,34 @@
+pre_line = []
+f = open('input_task4.txt', encoding="utf-8")
+
+for line in f:
+    pre_line.append(line[:-1])
+f.close()
+
+line = "".join([j for sub in pre_line for j in sub])
+
+def isBracketsBalance(s):
+    # Если число скобок нечетное, сразу возвращаем результат
+    if len(s) % 2 != 0:
+        return False
+    
+    # Создаем Stack размером с исходную строку
+    # будем харнить в нем все открывающиеся скобки
+    st = Stack(len(s))
+    
+    for c in s:
+        if c == '(':
+            st.push(c)
+        # Если встретили закрывающую скобку, то проверяем не пуст ли Stack 
+        # и если это не так, то удаляем скобку в начале списка
+        if c == ')':
+            if st.isEmpty():
+                return False
+            st.pop()
+            
+    return st.isEmpty()
+
+print(isBracketsBalance(pre_line[0]))
+print(isBracketsBalance('()())((())(()(())()'))
+print(isBracketsBalance('(()())()()()()(()(()(())()))'))
+print(isBracketsBalance('))(('))
